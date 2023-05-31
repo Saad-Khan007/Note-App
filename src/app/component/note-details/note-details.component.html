@@ -1,0 +1,24 @@
+<div class="form-container">
+    <form  #noteForm="ngForm" (ngSubmit)="submit(noteForm)">
+        <div class="field">
+            <label class="label">Title</label>
+            <div class="control">
+                <input type="text" name="title" [ngModel]="note.title" required="" class="input" autofocus>
+                <span class="err" *ngIf="noteForm.controls['title']?.touched && noteForm.controls['title']?.errors?.['required']">* Title is required.</span>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Body</label>
+            <div class="control">
+                <textarea class="textarea input" name="body" required [ngModel]="note.body"></textarea>
+                <span class="err" *ngIf="noteForm.controls['body']?.touched && noteForm.controls['body']?.errors?.['required']">* Body is required.</span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="button">
+                <button class="btn1" type="button" (click)="cancel()">Cancel</button>
+                <button class="btn2" type="submit" [disabled]="noteForm.invalid" >Save</button>
+            </div>
+        </div>
+    </form>
+</div>
