@@ -3,6 +3,7 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Note } from 'src/app/service/note.model';
 import { NotesService } from 'src/app/service/notes.service';
+import { NotesListComponent } from '../notes-list/notes-list.component';
 
 @Component({
   selector: 'app-note-details',
@@ -13,13 +14,12 @@ export class NoteDetailsComponent {
   note: Note = new Note();
   noteId: number | undefined;
   new: boolean | undefined;
-  constructor(private formBuilder: FormBuilder, private noteService: NotesService, private router: Router, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private noteService: NotesService, private router: Router, private route: ActivatedRoute, public listComponent: NotesListComponent) {
   }
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
-      console.log(params)
       if (params['id'] != 'new') {
-        this.note = this.noteService.get(params['id']);
+        this.noteService.get(params['id']).then((notes: any) => this.note = notes);
         this.noteId = params['id'];
         this.new = false;
       } else {
@@ -28,12 +28,12 @@ export class NoteDetailsComponent {
     })
   }
   submit(form: NgForm) {
-    console.log(form)
     if (this.new) {
-      this.noteService.add(form.value)
+      this.noteService.add(form.value);
     } else {
       this.noteService.update(this.noteId, form.value.title, form.value.body)
     }
+    this.noteService.getAll().then((innotes: any) => { this.listComponent.notes = innotes })
     this.router.navigateByUrl('/')
   }
   cancel() {

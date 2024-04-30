@@ -1,33 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Note } from './note.model';
+import { HttpClient } from '@angular/common/http';
+import { envoirment } from 'envoirment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotesService {
   notes: Note[] = new Array<Note>()
-  constructor() { }
-  getAll(){
-    return this.notes
+  constructor(private http: HttpClient) { }
+
+  getAll() {
+    return this.http.get(envoirment.DATABASE_URL + 'todo-list').toPromise();
   }
+
   get(id: number) {
-    return this.notes[id];
+    return this.http.get(envoirment.DATABASE_URL + 'todo-list/' + id).toPromise();
   }
-  getId(note: Note) {
-    return this.notes.indexOf(note);
-  }
+
   add(note: Note) {
-    let newLength = this.notes.push(note);
-    let index = newLength - 1;
-    return index;
+    return this.http.post(envoirment.DATABASE_URL + 'todo-list', note).toPromise();
   }
-  update(id:any,title:string,body:string){
-    let note =this.notes[id];
-    note.title = title;
-    note.body = body;
+
+  update(id: any, title: string, body: string) {
+    const value = {
+      body,
+      title
+    };
+    this.http.put(envoirment.DATABASE_URL + 'todo-list/' + id, value).toPromise();
   }
-  delete(id:number){
-    this.notes.splice(id,1);
+
+  delete(id: number) {
+    this.http.delete(envoirment.DATABASE_URL + 'todo-list/' + id).toPromise();
   }
 
 }

@@ -8,6 +8,7 @@ import { MainLayoutComponent } from './component/main-layout/main-layout.compone
 import { NoteCardComponent } from './component/note-card/note-card.component';
 import { NoteDetailsComponent } from './component/note-details/note-details.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -22,8 +23,9 @@ import { FormsModule,ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [NotesListComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

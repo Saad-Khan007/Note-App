@@ -5,8 +5,8 @@
         <input type="text" class="textBox" placeholder="Filter">
     </div> -->
     <div class="note-list">
-        <app-note-card *ngFor="let note of notes;let i = index" [link]="i" [id]="i" [body]="note.body"
-            [title]="note.title" (delete)="deleteNote(i)"></app-note-card>
+        <app-note-card *ngFor="let note of notes;let i = index" [link]="note.id" [id]="i" [body]="note.body"
+            [title]="note.title" (delete)="deleteNote(note.id)"></app-note-card>
     </div>
     <button class="addBtn" routerLink="new">+ Add</button>
 </div>

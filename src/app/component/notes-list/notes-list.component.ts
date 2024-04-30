@@ -8,13 +8,13 @@ import { NotesService } from 'src/app/service/notes.service';
   styleUrls: ['./notes-list.component.css']
 })
 export class NotesListComponent {
-  notes:Note[] =new Array<Note>()
-  constructor(private noteService:NotesService){}
-  ngOnInit(){
-    this.notes = this.noteService.getAll();
+  notes: Note[] = new Array<Note>()
+  constructor(private noteService: NotesService) { }
+  ngOnInit() {
+    this.noteService.getAll().then((innotes: any) => { this.notes = innotes });
   }
-  deleteNote(id:number){
-    console.log(id)
+  deleteNote(id: any) {
     this.noteService.delete(id)
+    this.noteService.getAll().then((innotes: any) => { this.notes = innotes });
   }
 }
