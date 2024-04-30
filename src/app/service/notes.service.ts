@@ -33,5 +33,4 @@ export class NotesService {
   delete(id: number) {
     this.http.delete(envoirment.DATABASE_URL + 'todo-list/' + id).toPromise();
   }
-
 }
