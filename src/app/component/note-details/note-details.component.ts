@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Note } from 'src/app/service/note.model';
 import { NotesService } from 'src/app/service/notes.service';
@@ -14,8 +14,10 @@ export class NoteDetailsComponent {
   note: Note = new Note();
   noteId: number | undefined;
   new: boolean | undefined;
-  constructor(private formBuilder: FormBuilder, private noteService: NotesService, private router: Router, private route: ActivatedRoute, public listComponent: NotesListComponent) {
+
+  constructor(private noteService: NotesService, private router: Router, private route: ActivatedRoute, public listComponent: NotesListComponent) {
   }
+
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       if (params['id'] != 'new') {
@@ -27,6 +29,7 @@ export class NoteDetailsComponent {
       }
     })
   }
+
   submit(form: NgForm) {
     if (this.new) {
       this.noteService.add(form.value);
@@ -36,6 +39,7 @@ export class NoteDetailsComponent {
     this.noteService.getAll().then((innotes: any) => { this.listComponent.notes = innotes })
     this.router.navigateByUrl('/')
   }
+
   cancel() {
     this.router.navigateByUrl('/')
   }
