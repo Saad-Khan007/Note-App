@@ -20,5 +20,4 @@ export class NotesListComponent {
     this.noteService.delete(id)
     this.noteService.getAll().then((innotes: any) => { this.notes = innotes });
   }
-
 }
